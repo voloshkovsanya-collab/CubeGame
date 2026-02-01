@@ -20,7 +20,8 @@ class GameView:
         """Draw a cube-model directly (expects pixel units)."""
         x, y, _ = cube.position
         size_px = int(cube.size)
-        pygame.draw.rect(self.screen, color, pygame.Rect(int(x), int(y), size_px, size_px))
+        objrect = pygame.Rect(int(x), int(y), size_px, size_px)
+        pygame.draw.rect(self.screen, color, objrect)
 
     def update(self) -> None:
         pygame.display.flip()

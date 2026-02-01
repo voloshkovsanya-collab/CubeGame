@@ -2,16 +2,21 @@ import pygame
 from cube_game.entities.cube import Cube
 from cube_game.entities.enemy import Enemy
 
-# Створюємо гравця та ворога
-player = Cube(start_x_px=50, start_y_px=50, size_px=50)
-enemy = Enemy(start_x_px=200, start_y_px=200, size_px=50)
 
-def run() -> None:
-    """Головний цикл гри."""
-    while True:
+class GameApp:
+    """Контролер логіки гри."""
+    
+    def __init__(self):
+        """Ініціалізує гру з гравцем та ворогом."""
+        # Створюємо гравця та ворога
+        self.player = Cube(start_x_px=50, start_y_px=50, size_px=50)
+        self.enemy = Enemy(start_x_px=200, start_y_px=200, size_px=50)
+    
+    def update(self) -> None:
+        """Оновлює логіку гри кожний фрейм."""
         keys = pygame.key.get_pressed()
         dx = dy = 0
-        speed = getattr(player, "speed_px", getattr(player, "speed", 4))
+        speed = getattr(self.player, "speed_px", getattr(self.player, "speed", 4))
 
         if keys[pygame.K_LEFT]:
             dx -= speed
@@ -25,11 +30,15 @@ def run() -> None:
 
         # Рухаємо гравця
         if dx != 0 or dy != 0:
-            player.move(dx, dy, 0.0)
+            self.player.move(dx, dy, 0.0)
 
         # Future: enemy AI, collisions etc.
-        if hasattr(enemy, "update"):
+        if hasattr(self.enemy, "update"):
             try:
-                enemy.update()
+                self.enemy.update()
             except TypeError:
                 pass
+    
+    def stop(self) -> None:
+        """Зупиняє гру."""
+        pass
