@@ -1,3 +1,4 @@
+import pygame
 from typing import Tuple
 
 
@@ -35,6 +36,23 @@ class ParentCube:
         """Move by dx/dy/dz in pixels."""
         x, y, z = self._position_px
         self._position_px = (x + dx_px, y + dy_px, z + dz_px)
+
+    @property
+    def rect(self) -> pygame.Rect:
+        """Return the integer rectangle for this cube."""
+        x, y, _ = self._position_px
+        return pygame.Rect(int(x), int(y), int(self._size_px), int(self._size_px))
+
+    @property
+    def center(self) -> Tuple[int, int]:
+        """Return the center point of the cube."""
+        x, y, _ = self._position_px
+        half = self._size_px / 2.0
+        return (int(x + half), int(y + half))
+
+    def collidepoint(self, point: Tuple[float, float]) -> bool:
+        """Check whether the given point is inside this cube."""
+        return self.rect.collidepoint(int(point[0]), int(point[1]))
 
     @property
     def volume(self) -> float:

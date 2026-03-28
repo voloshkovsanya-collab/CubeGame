@@ -46,6 +46,10 @@ def handle_input():
         player.move(dx, dy, 0.0)
 
 
+def check_collision() -> bool:
+    """Перевіряє зіткнення гравця та ворога через collidepoint."""
+    return player.collidepoint(enemy.center) or enemy.collidepoint(player.center)
+
 
 def render():
     """Рендеринг гри."""
@@ -75,12 +79,19 @@ def main_loop():
     running = True
     clock = pygame.time.Clock()
     
+    collision_detected = False
+
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
 
         handle_input()
+        current_collision = check_collision()
+        if current_collision and not collision_detected:
+            print("Гравець і ворог зіштовхнулися через collidepoint!")
+        collision_detected = current_collision
+
         render()
         clock.tick(60)  # 60 FPS
 
