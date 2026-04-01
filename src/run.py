@@ -19,7 +19,7 @@ def init_game():
     pygame.init()
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Cube Game")
-    player = Cube(start_x_px=200, start_y_px=200, size_px=200)
+    player = Cube(start_x_px=200, start_y_px=200, size_px=50)
     enemy = Enemy(start_x_px=200, start_y_px=200, size_px=50)
     print("Гра стартувала! Закрийте вікно, щоб завершити.")
 
